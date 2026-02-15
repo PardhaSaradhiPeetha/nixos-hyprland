@@ -1,0 +1,182 @@
+{ config, pkgs, lib, ... }:
+
+{
+  imports = [ ./hardware-configuration.nix ];
+
+  system.stateVersion = "25.11";
+
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelParams = [ "quiet" "loglevel=3" "nvidia-drm.modeset=1" ];
+  boot.blacklistedKernelModules = [ "nouveau" ];
+
+  networking.hostName = "loq";
+  networking.networkmanager.enable = true;
+
+  time.timeZone = "Asia/Kolkata";
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  nixpkgs.config.allowUnfree = true;
+
+  nix.settings = {
+    auto-optimise-store = true;
+    max-jobs = "auto";
+    cores = 0;
+  };
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 1d";
+  };
+  
+  documentation = {
+      enable = false;
+      nixos.enable = false;
+      man.enable = false;
+      info.enable = false;
+  };
+
+  services.journald = {
+      extraConfig = ''
+        SystemMaxUse=10M
+        RuntimeMaxUse=20M
+        MaxRetentionSec=1day
+        Compress=yes
+        Storage=volatile
+      '';
+   };
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      allowRoot = false;
+      defaultUser = "ps";
+      hideSession = true;
+      animation = "none";
+      bigclock = true;
+      tty = 1;
+
+      logLevel = "off";
+      logToFile = false;
+      logFile = "/dev/null";
+    };
+  };
+
+  services.logind.settings.Login = {
+     IdleAction = "suspend";
+     IdleActionSec = "2min";
+   
+     HandleLidSwitch = "ignore";
+     HandleLidSwitchDocked = "ignore";
+     HandleLidSwitchExternalPower = "ignore";
+  };    
+  
+  fonts = {
+    packages = with pkgs; [ nerd-fonts.fira-code ];
+    fontconfig.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    config.common.default = "hyprland";
+  };
+
+  systemd.coredump.enable = false;
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "hard";
+      item = "core";
+      value = "0";
+    }
+  ];
+
+  services.udisks2.enable = true;
+  services.printing.enable = false;
+  services.dbus.enable = true;
+  services.power-profiles-daemon.enable = true;
+  services.thermald.enable = true;
+  services.fwupd.enable = true;
+  
+  hardware.bluetooth.enable = true;
+  
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = true;
+    powerManagement.finegrained = true;
+    open = false;
+    nvidiaSettings = false;
+  
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  
+    prime = {
+      offload.enable = true;
+      offload.enableOffloadCmd = true;
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+  };
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [ intel-media-driver ];
+  };
+
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
+
+  services.libinput = {
+    enable = true;
+    touchpad.tapping = true;
+  };
+   
+  users.users.ps = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
+  };
+  
+  programs.nano.enable = false;
+  environment.variables = {
+   EDITOR = "micro";
+   VISUAL = "micro";
+   TERMINAL = "alacritty";
+  };
+
+  environment.systemPackages = with pkgs; [
+    waybar
+    hyprpaper
+    swaylock
+    swayidle
+    alacritty
+    fuzzel
+    wl-clipboard
+    grim
+    slurp
+    brightnessctl
+    git
+    curl
+    zip
+    unzip
+    mpv
+    ffmpeg
+    imv
+    bluetuith
+    brave
+    vscodium
+    micro
+    fastfetchMinimal
+  ];
+}

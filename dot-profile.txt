@@ -1,0 +1,42 @@
+# ==========================================
+# ~/.profile — NixOS + Hyprland GPU helpers
+# ==========================================
+
+# Only for bash
+[ -z "$BASH_VERSION" ] && return
+
+# NVIDIA PRIME offload
+alias nvgpu='__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only'
+
+# NVIDIA status
+ngpu() {
+  if [ -e /proc/driver/nvidia/version ]; then
+    if [ -e /proc/driver/nvidia/gpus/0/power ]; then
+      grep -i "Runtime" /proc/driver/nvidia/gpus/0/power
+    else
+      echo "NVIDIA driver loaded"
+    fi
+  else
+    echo "NVIDIA suspended (driver not loaded)"
+  fi
+}
+
+# Intel iGPU status
+igpu() {
+  for card in /sys/class/drm/card*/device/vendor; do
+    if grep -q 0x8086 "$card" 2>/dev/null; then
+      echo "Intel iGPU active"
+      return
+    fi
+  done
+  echo "Intel iGPU not detected"
+}
+
+# Which GPU this shell will use
+gpu() {
+  if [ "$__NV_PRIME_RENDER_OFFLOAD" = "1" ]; then
+    echo "NVIDIA (PRIME offload active)"
+  else
+    echo "Intel iGPU (default)"
+  fi
+}

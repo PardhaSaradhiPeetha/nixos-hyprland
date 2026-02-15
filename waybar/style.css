@@ -1,0 +1,114 @@
+* {
+  font-family: "FiraCode Nerd Font";
+  font-size: 18px;
+  border: none;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+}
+
+#waybar > box {
+  background: #2e3440;
+  color: #d8dee9;
+
+  border-radius: 16px;
+
+  margin-top: 6px;
+  margin-left: 120px;
+  margin-right: 120px;
+  margin-bottom: 6px;
+  padding: 6px 10px;
+}
+
+#workspaces {
+  margin: 0 6px;
+}
+
+#workspaces button {
+  padding: 0 12px;
+  margin: 2px;
+  background: transparent;
+  color: #d8dee9;
+  border-radius: 8px;
+
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-image: none;
+}
+
+#workspaces button:hover {
+  background: #434c5e;
+  color: #ffffff;
+
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-image: none;
+}
+
+#workspaces button:focus,
+#workspaces button:focus-visible,
+#workspaces button:active {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background-image: none;
+}
+
+#workspaces button.active {
+  background: #88c0d0;
+  color: #2e3440;
+}
+
+#submap {
+  padding: 0 12px;
+  margin: 2px;
+  background: #bf616a;
+  color: #eceff4;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+#clock {
+  font-weight: bold;
+  padding: 0 14px;
+  margin: 2px;
+  border-radius: 10px;
+}
+
+#network,
+#bluetooth,
+#pulseaudio,
+#custom-mic,
+#custom-headphones,
+#custom-usb,
+#battery {
+  padding: 0 12px;
+  margin: 2px;
+  border-radius: 10px;
+}
+
+#network:hover,
+#bluetooth:hover,
+#pulseaudio:hover,
+#custom-mic:hover,
+#custom-headphones:hover,
+#custom-usb:hover,
+#battery:hover {
+  background: #3b4252;
+}
+
+#battery.charging {
+  color: #ebcb8b;
+}
+
+#battery.warning {
+  color: #ebcb8b;
+}
+
+#battery.critical {
+  color: #bf616a;
+}

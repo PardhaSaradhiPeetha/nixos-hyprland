@@ -1,0 +1,34 @@
+{
+    "window.menuBarVisibility": "toggle",
+    "window.commandCenter": false,
+    "workbench.layoutControl.enabled": false,
+    "editor.minimap.enabled": false,
+    "window.titleBarStyle": "custom",
+    "window.controlsStyle": "hidden",
+    "zenMode.hideStatusBar": false,
+    "debug.enableStatusBarColor": false,
+    "files.autoSave": "afterDelay",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "workbench.statusBar.visible": false,
+    "workbench.tips.enabled": false,
+    "workbench.tree.indent": 20,
+    "workbench.editor.autoLockGroups": {
+        "workbench.editor.chatSession": false,
+        "mainThreadWebview-browserPreview": false
+    },
+    "workbench.colorCustomizations": {},
+    "workbench.colorTheme": "Yukinord",
+    "workbench.iconTheme": "material-icon-theme",
+    /* ---------- DISABLE EXPERIMENTAL FEATURES ---------- */
+    "workbench.enableExperiments": false,
+    "workbench.experimental.settingsProfiles.enabled": false,
+    "workbench.experimental.editorActions.enabled": false,
+    "workbench.experimental.treeSitterTelemetry": false,
+    "workbench.experimental.useMarkdownRenderer": false,
+    /* ---------- OPTIONAL: STABILITY / NO SURPRISES ---------- */
+    "update.mode": "none",
+    "extensions.autoUpdate": false,
+    "extensions.autoCheckUpdates": false,
+    "editor.fontSize": 16
+}

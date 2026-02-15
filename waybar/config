@@ -1,0 +1,100 @@
+{
+  "layer": "top",
+  "position": "top",
+  "exclusive": true,
+  "passthrough": false,
+  "height": 51,
+  "spacing": 6,
+
+  "modules-left": [
+    "custom/launcher",
+    "hyprland/workspaces",
+    "hyprland/submap"
+  ],
+
+  "modules-center": [
+    "clock"
+  ],
+
+  "modules-right": [
+    "network",
+    "bluetooth",
+    "pulseaudio",
+    "custom/mic",
+    "backlight",
+    "custom/usb",
+    "battery"
+  ],
+
+  "custom/launcher": {
+    "format": "  ",
+    "on-click": "fuzzel",
+    "tooltip": false
+  },
+
+  "clock": {
+    "format": "{:%H:%M %d %a %b}",
+    "tooltip": false
+  },
+
+  "network": {
+    "format-wifi": "  {essid}",
+    "format-ethernet": "  ",
+    "format-disconnected": " 󰖪 ",
+    "on-click": "alacritty -e nmtui",
+    "tooltip": false
+  },
+
+  "bluetooth": {
+    "format": "󰂲",
+    "format-disabled": "󰂲",
+    "format-disconnected": "󰂲",
+    "format-connected": "  {device_alias} ",
+    "on-click": "alacritty -e bluetuith",
+    "tooltip": false
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰝟",
+    "format-icons": {
+      "headphones": "󰋋",
+      "bluetooth": "󰂯",
+      "default": "󰕾"
+    },
+    "scroll-step": 5,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "tooltip": false
+  },
+
+  "custom/mic": {
+    "exec": "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED && echo '󰍭' || echo '󰍬'",
+    "interval": 1,
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+    "tooltip": false
+  },
+
+  "backlight": {
+    "device": "nvidia_wmi_ec_backlight",
+    "format": "󰃠 {percent}%",
+    "on-scroll-up": "brightnessctl set +5%",
+    "on-scroll-down": "brightnessctl set 5%-",
+    "tooltip": false
+  },
+
+  "custom/usb": {
+    "exec": "lsblk -rno LABEL,NAME,TYPE,RM | awk '$4==1 && $3==\"part\" { if ($1 != \"\") print \"󰕓 \" $1; else print \"󰕓\"; exit }'",
+    "interval": 2,
+    "tooltip": false
+  },
+  
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-charging": "󱐥 {capacity}%",
+    "format-icons": [
+      "󰁺","󰁻","󰁼","󰁽","󰁾",
+      "󰁿","󰂀","󰂁","󰂂","󰁹"
+    ],
+    "tooltip": false
+  }
+}
