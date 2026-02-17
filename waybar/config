@@ -17,6 +17,7 @@
   ],
 
   "modules-right": [
+    "custom/record",
     "network",
     "bluetooth",
     "pulseaudio",
@@ -37,29 +38,35 @@
     "tooltip": false
   },
 
+  "custom/record": {
+    "exec": "pgrep -x wf-recorder >/dev/null && echo ' REC' || echo ''",
+    "interval": 1,
+    "tooltip": false
+  },
+  
   "network": {
-    "format-wifi": "  {essid}",
+    "format-wifi": " ",
     "format-ethernet": "  ",
     "format-disconnected": " 󰖪 ",
-    "on-click": "alacritty -e nmtui",
-    "tooltip": false
+    "tooltip": true,
+    "tooltip-format-wifi": "{essid}",
+    "tooltip-format-ethernet": "",
+    "on-click": "alacritty -e nmtui"
   },
 
   "bluetooth": {
-    "format": "󰂲",
-    "format-disabled": "󰂲",
-    "format-disconnected": "󰂲",
-    "format-connected": "  {device_alias} ",
+    "format": "󰂯",
+    "format-connected": " {device_alias}",
     "on-click": "alacritty -e bluetuith",
     "tooltip": false
-  },
+   },       
 
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": "󰝟",
     "format-icons": {
       "headphones": "󰋋",
-      "bluetooth": "󰂯",
+      "bluetooth": "󰓃",
       "default": "󰕾"
     },
     "scroll-step": 5,
@@ -68,8 +75,9 @@
   },
 
   "custom/mic": {
-    "exec": "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED && echo '󰍭' || echo '󰍬'",
+    "exec": "wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED && echo '{\"text\":\"󰍭\",\"class\":\"muted\"}' || echo '{\"text\":\"󰍬\"}'",
     "interval": 1,
+    "return-type": "json",
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
     "tooltip": false
   },

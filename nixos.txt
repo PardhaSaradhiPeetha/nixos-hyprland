@@ -69,14 +69,11 @@
     };
   };
 
-  services.logind.settings.Login = {
-     IdleAction = "suspend";
-     IdleActionSec = "2min";
-   
+  services.logind.settings.Login = {   
      HandleLidSwitch = "ignore";
      HandleLidSwitchDocked = "ignore";
      HandleLidSwitchExternalPower = "ignore";
-  };    
+  };   
   
   fonts = {
     packages = with pkgs; [ nerd-fonts.fira-code ];
@@ -163,6 +160,7 @@
     alacritty
     fuzzel
     wl-clipboard
+    wf-recorder
     grim
     slurp
     brightnessctl
@@ -171,12 +169,12 @@
     zip
     unzip
     mpv
-    ffmpeg
-    imv
     bluetuith
     brave
     vscodium
     micro
     fastfetchMinimal
+
+    nodejs_24
   ];
 }
